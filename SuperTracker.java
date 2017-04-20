@@ -14,15 +14,13 @@ import java.util.Scanner;
  */
 public class SuperTracker extends AdvancedRobot {
 	int moveDirection = 1;// which way to move
-	private double dist;
-	private double speedP;
-	private double range;
-	private double minSpeed;
+	private double[] params;  
 	/**
 	 * run:  Tracker's main run function
 	 */
 	public void run() {
-		tuneBot("put your path here");
+		params = new double[4];
+		tuneBot("your path");
 		setAdjustRadarForRobotTurn(true);//keep the radar still while we turn
 		setBodyColor(new Color(128, 128, 50));
 		setGunColor(new Color(50, 50, 20));
@@ -46,12 +44,12 @@ public class SuperTracker extends AdvancedRobot {
 		double gunTurnAmt;// amount to turn our gun
 		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the
 																// radar
-		if (Math.random() > speedP) {
-			setMaxVelocity((range * Math.random()) + minSpeed);// randomly change speed
+		if (Math.random() > params[1]) {
+			setMaxVelocity((params[2] * Math.random()) + params[3]);// randomly change speed
 														// \\ VELOCIDAD + RANGO
 														// + MINIMA VELOCIDAD
 		}
-		if (e.getDistance() > dist) {// if distance is greater than 150 \\
+		if (e.getDistance() > params[0]) {// if distance is greater than 150 \\
 									// DISTANCIA
 			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 22);// amount
 																													// to
@@ -109,15 +107,16 @@ public class SuperTracker extends AdvancedRobot {
 
 	private void tuneBot(String path) {
 		try {
+			int i = 0;
 			Scanner sc = new Scanner(new FileReader(path));
+			Scanner sc2 = new Scanner(sc.nextLine());
+			sc2.useDelimiter("<");
 			
-			sc.useDelimiter("[<>]+");
-			dist = sc.nextDouble();
-			speedP = sc.nextDouble();
-			range = sc.nextDouble();
-			minSpeed = sc.nextDouble();
+			while(sc2.hasNext()){
+				params[i++] = sc2.nextDouble();
+			}		
 			
-			
+			sc2.close();
 			sc.close();
 		} catch (IOException e) {
 			e.printStackTrace();
