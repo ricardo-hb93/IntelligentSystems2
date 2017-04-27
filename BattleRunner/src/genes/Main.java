@@ -21,7 +21,7 @@ public class Main {
 			while (i<4) {
 				genes[i] = new DoubleGene(conf);
 				genes[i].setAllele(sc2.nextDouble());
-				System.out.println(genes[i].doubleValue());
+
 				i++;
 			}
 			Chromosome c = new Chromosome(conf, genes);
