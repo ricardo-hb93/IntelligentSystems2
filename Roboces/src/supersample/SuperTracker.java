@@ -4,6 +4,7 @@ import robocode.*;
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -14,13 +15,16 @@ import java.util.Scanner;
  */
 public class SuperTracker extends AdvancedRobot {
 	int moveDirection = 1;// which way to move
+	Random numberGenerator = new Random(0);
 	private double[] params;  
 	/**
 	 * run:  Tracker's main run function
 	 */
+	
+	
 	public void run() {
 		params = new double[4];
-		tuneBot("C:\\Users\\alumno\\workspace-jee\\BattleRunner\\src\\a.txt");
+		tuneBot("C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tune.txt");
 		setAdjustRadarForRobotTurn(true);//keep the radar still while we turn
 		setBodyColor(new Color(128, 128, 50));
 		setGunColor(new Color(50, 50, 20));
@@ -44,8 +48,8 @@ public class SuperTracker extends AdvancedRobot {
 		double gunTurnAmt;// amount to turn our gun
 		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the
 																// radar
-		if (Math.random() > params[1]) {
-			setMaxVelocity((params[2] * Math.random()) + params[3]);// randomly change speed
+		if (numberGenerator.nextDouble() > params[1]) {
+			setMaxVelocity((params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
 														// \\ VELOCIDAD + RANGO
 														// + MINIMA VELOCIDAD
 		}
