@@ -20,7 +20,7 @@ public class BattleRunner {
 		RobocodeEngine.setLogMessagesEnabled(false);
 		RobocodeEngine engine = new RobocodeEngine(new java.io.File("C:/Robocode"));
 		engine.addBattleListener(new BattleObserver());
-		engine.setVisible(true);
+		engine.setVisible(false);
 
 		long inactivityTime = 10000000;
 		double gunCoolingRate = 0.2;
