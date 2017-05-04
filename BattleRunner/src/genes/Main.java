@@ -27,10 +27,10 @@ public class Main {
 		conf.setFitnessFunction(myFunc);
 
 		Gene[] sampleGenes = new Gene[4];
-		sampleGenes[0] = new DoubleGene(conf, 0.0, 200.0);
-		sampleGenes[1] = new DoubleGene(conf, 0.1, 1.0);
-		sampleGenes[2] = new DoubleGene(conf, 6.0, 18.0);
-		sampleGenes[3] = new DoubleGene(conf, 6.0, 18.0);
+		sampleGenes[0] = new DoubleGene(conf, 0.0, 300.0);	// Radar distance
+		sampleGenes[1] = new DoubleGene(conf, 0.1, 1.0);	// probability change of speed
+		sampleGenes[2] = new DoubleGene(conf, 0.0, 1.0);	// Speed range
+		sampleGenes[3] = new DoubleGene(conf, 0.0, 8.0);	// Minimum speed
 
 		IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		conf.setSampleChromosome(sampleChromosome);
