@@ -4,6 +4,7 @@ import robocode.*;
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -110,6 +111,7 @@ public class SuperTracker extends AdvancedRobot {
 	}
 
 	private void tuneBot(String path) {
+		Locale.setDefault(Locale.ENGLISH);
 		try {
 			int i = 0;
 			Scanner sc = new Scanner(new FileReader(path));
@@ -117,6 +119,7 @@ public class SuperTracker extends AdvancedRobot {
 			
 			while(sc2.hasNext()){
 				params[i++] = sc2.nextDouble();
+				System.out.println(params[i-1]);
 			}		
 			
 			sc2.close();
