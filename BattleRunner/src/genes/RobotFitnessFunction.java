@@ -25,7 +25,7 @@ public class RobotFitnessFunction extends FitnessFunction {
 	}
 	
 	private void setValues(IChromosome chromosomes){
-		String filename = "C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tune.txt";
+		String filename = "Path";
 		try {
 			PrintWriter pw = new PrintWriter(new File(filename));
 			for (int i=0; i<chromosomes.size(); i++){
