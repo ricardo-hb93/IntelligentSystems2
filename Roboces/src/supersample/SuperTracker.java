@@ -4,6 +4,7 @@ import robocode.*;
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class SuperTracker extends AdvancedRobot {
 	
 	public void run() {
 		params = new double[4];
-		tuneBot("C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tune.txt");
+		tuneBot("path");
 		setAdjustRadarForRobotTurn(true);//keep the radar still while we turn
 		setBodyColor(new Color(128, 128, 50));
 		setGunColor(new Color(50, 50, 20));
@@ -49,9 +50,13 @@ public class SuperTracker extends AdvancedRobot {
 		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the
 																// radar
 		if (numberGenerator.nextDouble() > params[1]) {
-			setMaxVelocity((params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
+	/*		setMaxVelocity((params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
 														// \\ VELOCIDAD + RANGO
 														// + MINIMA VELOCIDAD
+		*/
+			setMaxVelocity(((8 - params[3]) * params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
+														//  MAXVELOCIDAD = RANGO + MINIMA VELOCIDAD
+														//Rango needed from 0 to maxvelocity(=8)-minvelocidad
 		}
 		if (e.getDistance() > params[0]) {// if distance is greater than 150 \\
 									// DISTANCIA
@@ -110,6 +115,7 @@ public class SuperTracker extends AdvancedRobot {
 	}
 
 	private void tuneBot(String path) {
+		Locale.setDefault(Locale.ENGLISH);
 		try {
 			int i = 0;
 			Scanner sc = new Scanner(new FileReader(path));
