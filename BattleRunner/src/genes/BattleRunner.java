@@ -23,8 +23,8 @@ public class BattleRunner {
 		RobotSpecification[] selectedRobots = new RobotSpecification[2];
 		RobotSetup[] initialSetups = new RobotSetup[2];
 		selectedRobots = engine.getLocalRepository(robotsToAdd);
-		initialSetups[0] = new RobotSetup(580.0, 580.0, 0.0);
-		initialSetups[1] = new RobotSetup(500.0, 500.0, 0.0);
+		initialSetups[0] = new RobotSetup(832.0*0.75, 832.0*0.25, 0.0);
+		initialSetups[1] = new RobotSetup(832.0*0.25, 832.0*0.75, 0.0);
 		BattleSpecification battleSpec = new BattleSpecification(battlefield, numRounds, inactivityTime, gunCoolingRate, sentryBorderSize, hideEnemyNames, selectedRobots, initialSetups);
 		engine.runBattle(battleSpec, true);
 		engine.close();
