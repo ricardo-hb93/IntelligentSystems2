@@ -23,18 +23,18 @@ public class Main {
 		Configuration conf = new DefaultConfiguration();
 		conf.setPreservFittestIndividual(true);
 
-		FitnessFunction myFunc = new RobotFitnessFunction();
+		FitnessFunction myFunc = new RobotFitnessFunction("supersample.SuperTracker*");
 		conf.setFitnessFunction(myFunc);
 
 		Gene[] sampleGenes = new Gene[4];
 		sampleGenes[0] = new DoubleGene(conf, 0.0, 200.0);
-		sampleGenes[1] = new DoubleGene(conf, 0.0, 1.0);
-		sampleGenes[2] = new DoubleGene(conf, 0.0, 20.0);
-		sampleGenes[3] = new DoubleGene(conf, 0.0, 20.0);
+		sampleGenes[1] = new DoubleGene(conf, 0.1, 1.0);
+		sampleGenes[2] = new DoubleGene(conf, 6.0, 18.0);
+		sampleGenes[3] = new DoubleGene(conf, 6.0, 18.0);
 
 		IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		conf.setSampleChromosome(sampleChromosome);
-		conf.setPopulationSize(15);
+		conf.setPopulationSize(10);
 
 		Genotype population;
 		try {
