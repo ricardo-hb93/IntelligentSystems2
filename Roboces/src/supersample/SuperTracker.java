@@ -119,7 +119,6 @@ public class SuperTracker extends AdvancedRobot {
 			
 			while(sc2.hasNext()){
 				params[i++] = sc2.nextDouble();
-				System.out.println(params[i-1]);
 			}		
 			
 			sc2.close();
