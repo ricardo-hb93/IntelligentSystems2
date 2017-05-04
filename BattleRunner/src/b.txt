@@ -1,0 +1,13 @@
+
+The best solution has a fitness value of 616.0
+It contained the following values: 
+231.76432437944524 
+0.5946810478843055 
+0.5273463973274747 
+4.336321998796351 
+The best solution has a fitness value of 702.0
+It contained the following values: 
+95.337188913354 
+0.4860429561989922 
+0.44657082643363155 
+7.213197702655112 

@@ -1,11 +1,10 @@
-package genes;
+package test;
 
 import robocode.control.*;
 import robocode.control.events.*;
 
-public class BattleRunner {
-	static int result = 0;
-	public static int run(String robotToImprove) {
+public class TestRobotsMain {
+	public static void main(String[] args) {
 		RobocodeEngine.setLogMessagesEnabled(false);
 		RobocodeEngine engine = new RobocodeEngine(new java.io.File("C:\\Robocode"));
 		engine.addBattleListener(new BattleObserver());
@@ -16,8 +15,7 @@ public class BattleRunner {
 		int sentryBorderSize = 50;
 		boolean hideEnemyNames = false;
 		int numRounds = 5;
-		String robotsToAdd = "supersample.SuperRamFire*,";
-		robotsToAdd = robotsToAdd.concat(robotToImprove);
+		String robotsToAdd = "supersample.SuperRamFire*, supersample.SuperTracker*";
 
 		BattlefieldSpecification battlefield = new BattlefieldSpecification(832, 832);
 		RobotSpecification[] selectedRobots = new RobotSpecification[2];
@@ -28,16 +26,26 @@ public class BattleRunner {
 		BattleSpecification battleSpec = new BattleSpecification(battlefield, numRounds, inactivityTime, gunCoolingRate, sentryBorderSize, hideEnemyNames, selectedRobots, initialSetups);
 		engine.runBattle(battleSpec, true);
 		engine.close();
-		result = BattleObserver.res;
-
-		return result;
+		System.exit(0);
 	}
-
 }
 
 class BattleObserver extends BattleAdaptor {
-	public static int res;
 	public void onBattleCompleted(BattleCompletedEvent e) {
-		res = Math.max(e.getIndexedResults()[1].getScore() - e.getIndexedResults()[0].getScore(), 0);
+		System.out.println("-- Battle has completed --");
+
+		System.out.println("Battle results:");
+		System.out.println(e.getIndexedResults()[1].getScore() - e.getIndexedResults()[0].getScore());
+		for (robocode.BattleResults result : e.getSortedResults()) {
+			System.out.println("  " + result.getTeamLeaderName() + ": " + result.getScore());
+		}
+	}
+
+	public void onBattleMessage(BattleMessageEvent e) {
+		System.out.println("Msg> " + e.getMessage());
+	}
+
+	public void onBattleError(BattleErrorEvent e) {
+		System.out.println("Err> " + e.getError());
 	}
 }

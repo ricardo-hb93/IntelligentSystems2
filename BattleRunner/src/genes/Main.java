@@ -22,21 +22,21 @@ import org.jgap.xml.XMLManager;
 import org.w3c.dom.Document;
 
 public class Main {
-	private final static int MAX_ALLOWED_EVOLUTIONS = 10;
+	private final static int MAX_ALLOWED_EVOLUTIONS = 100;
 
 	public static void findConfigurationForRobot() throws Exception {
 		Configuration conf = new DefaultConfiguration();
 		conf.setPreservFittestIndividual(true);
-
 		FitnessFunction myFunc = new RobotFitnessFunction("supersample.SuperTracker*");
 		conf.setFitnessFunction(myFunc);
 
-		Gene[] sampleGenes = new Gene[4];
+		Gene[] sampleGenes = new Gene[5];
 		sampleGenes[0] = new DoubleGene(conf, 0.0, 300.0);	// Radar distance
 		sampleGenes[1] = new DoubleGene(conf, 0.1, 1.0);	// probability change of speed
 		sampleGenes[2] = new DoubleGene(conf, 0.1, 1.0);	// Speed range
 		sampleGenes[3] = new DoubleGene(conf, 0.1, 8.0);	// Minimum speed
-
+		sampleGenes[4] = new DoubleGene(conf, -1.0, 1.0);	// Color!
+		
 		IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		conf.setSampleChromosome(sampleChromosome);
 		conf.setPopulationSize(10);
@@ -49,9 +49,15 @@ public class Main {
 			population = Genotype.randomInitialGenotype(conf);
 		}
 		population = Genotype.randomInitialGenotype(conf);
-
+		
+		IChromosome bestSolutionSoFar = population.getFittestChromosome();
+		StringBuilder sb = new StringBuilder();
+		
 		for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
+			bestSolutionSoFar = population.getFittestChromosome();
+			System.out.print("Generation "+ i +":");
 			population.evolve();
+			System.out.println("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
 		}
 
 		DataTreeBuilder builder = DataTreeBuilder.getInstance();
@@ -61,18 +67,17 @@ public class Main {
 		Document xmlDoc = (Document) docBuilder.buildDocument(doc2);
 		XMLManager.writeFile(xmlDoc, new File("robocodeJGAP.xml"));
 
-		IChromosome bestSolutionSoFar = population.getFittestChromosome();
-		StringBuilder sb = new StringBuilder();
+		
 		sb.append("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
-		sb.append("\n It contained the following values: ");
+		sb.append("\nIt contained the following values: ");
 		for (int i = 0; i < 4; i++) {
 			sb.append("\n" + bestSolutionSoFar.getGene(i).getAllele() + " ");
 		}
-		
+		sb.append("\n");
 		System.out.println(sb.toString());
 		
 		try {
-		    Files.write(Paths.get("C:\\Users\\SrSut\\Desktop\\Results.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
+		    Files.write(Paths.get("C:\\Users\\Pepe\\workspace\\BattleRunner\\src\\b.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
 		}catch (IOException e) {
 		    e.printStackTrace();
 		}

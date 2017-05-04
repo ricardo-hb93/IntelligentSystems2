@@ -24,14 +24,13 @@ public class SuperTracker extends AdvancedRobot {
 	
 	
 	public void run() {
-		params = new double[4];
-		tuneBot("path");
-		setAdjustRadarForRobotTurn(true);//keep the radar still while we turn
-		setBodyColor(new Color(128, 128, 50));
-		setGunColor(new Color(50, 50, 20));
-		setRadarColor(new Color(200, 200, 70));
-		setScanColor(Color.white);
-		setBulletColor(Color.blue);
+		params = new double[5];
+		tuneBot("C:\\Users\\Pepe\\workspace\\BattleRunner\\src\\a.txt");
+		if(params[4]>0){
+			setAllColors(Color.YELLOW);
+		}else{
+			setAllColors(Color.GREEN);
+		}
 		setAdjustGunForRobotTurn(true); // Keep the gun still when we turn
 		turnRadarRightRadians(Double.POSITIVE_INFINITY);//keep turning radar right
 		}

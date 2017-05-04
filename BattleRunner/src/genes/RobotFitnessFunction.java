@@ -20,14 +20,16 @@ public class RobotFitnessFunction extends FitnessFunction {
 	@Override
 	protected double evaluate(IChromosome chromosomes) {
 		setValues(chromosomes);
-		return BattleRunner.run(robotToImprove);
+		int val=BattleRunner.run(robotToImprove);
+		System.out.print(val+ " ");
+		return val;
 	}
 	
 	/*
 	 * 
 	 * */
 	private void setValues(IChromosome chromosomes){
-		String filename = "C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tune.txt";
+		String filename = "C:\\Users\\Pepe\\workspace\\BattleRunner\\src\\a.txt";
 		try {
 			PrintWriter pw = new PrintWriter(new File(filename));
 			for (int i=0; i<chromosomes.size(); i++){
