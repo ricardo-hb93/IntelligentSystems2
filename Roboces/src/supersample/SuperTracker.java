@@ -25,7 +25,7 @@ public class SuperTracker extends AdvancedRobot {
 	
 	public void run() {
 		params = new double[4];
-		tuneBot("C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tune.txt");
+		tuneBot("path");
 		setAdjustRadarForRobotTurn(true);//keep the radar still while we turn
 		setBodyColor(new Color(128, 128, 50));
 		setGunColor(new Color(50, 50, 20));
