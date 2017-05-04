@@ -17,90 +17,64 @@ public class SuperTracker extends AdvancedRobot {
 	int moveDirection = 1;// which way to move
 	Random numberGenerator = new Random(0);
 	private double[] params;  
+	
 	/**
-	 * run:  Tracker's main run function
+	 * Tracker's main run function
 	 */
-	
-	
 	public void run() {
 		params = new double[4];
 		tuneBot("C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tune.txt");
-		setAdjustRadarForRobotTurn(true);//keep the radar still while we turn
+		setAdjustRadarForRobotTurn(true);// keep the radar still while we turn
 		setBodyColor(new Color(128, 128, 50));
 		setGunColor(new Color(50, 50, 20));
 		setRadarColor(new Color(200, 200, 70));
 		setScanColor(Color.white);
 		setBulletColor(Color.blue);
-		setAdjustGunForRobotTurn(true); // Keep the gun still when we turn
-		turnRadarRightRadians(Double.POSITIVE_INFINITY);//keep turning radar right
-		}
+		setAdjustGunForRobotTurn(true); // keep the gun still when we turn
+		turnRadarRightRadians(Double.POSITIVE_INFINITY);// keep turning radar right
+	}
 
 	/**
 	 * onScannedRobot: Here's the good stuff
 	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
-		double absBearing = e.getBearingRadians() + getHeadingRadians();// enemies
-																		// absolute
-																		// bearing
-		double latVel = e.getVelocity() * Math.sin(e.getHeadingRadians() - absBearing);// enemies
-																						// later
-																						// velocity
+		double absBearing = e.getBearingRadians() + getHeadingRadians();// enemies absolute bearing
+		double latVel = e.getVelocity() * Math.sin(e.getHeadingRadians() - absBearing);// enemies later velocity
 		double gunTurnAmt;// amount to turn our gun
-		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the
-																// radar
+		
+		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the radar
+		
 		if (numberGenerator.nextDouble() > params[1]) {
 			setMaxVelocity((params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
-														// \\ VELOCIDAD + RANGO
-														// + MINIMA VELOCIDAD
+			// VELOCIDAD + RANGO + MINIMA VELOCIDAD
 		}
-		if (e.getDistance() > params[0]) {// if distance is greater than 150 \\
-									// DISTANCIA
-			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 22);// amount
-																													// to
-																													// turn
-																													// our
-																													// gun,
-																													// lead
-																													// just
-																													// a
-																													// little
-																													// bit
+		
+		if (e.getDistance() > params[0]) {// if distance is greater than 150
+			// DISTANCIA
+			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 22);// amount to turn our gun, lead just a little bit
 			setTurnGunRightRadians(gunTurnAmt); // turn our gun
-			setTurnRightRadians(
-					robocode.util.Utils.normalRelativeAngle(absBearing - getHeadingRadians() + latVel / getVelocity()));// drive
-																														// towards
-																														// the
-																														// enemies
-																														// predicted
-																														// future
-																														// location
+			setTurnRightRadians(robocode.util.Utils.normalRelativeAngle(absBearing - getHeadingRadians() + latVel / getVelocity()));// drive towards the enemies predicted future location
 			setAhead((e.getDistance() - 140) * moveDirection);// move forward
 			setFire(3);// fire
+		
 		} else {// if we are close enough...
-			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 15);// amount
-																													// to
-																													// turn
-																													// our
-																													// gun,
-																													// lead
-																													// just
-																													// a
-																													// little
-																													// bit
+			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 15);// amount to turn our gun, lead just a little bit
 			setTurnGunRightRadians(gunTurnAmt);// turn our gun
-			setTurnLeft(-90 - e.getBearing()); // turn perpendicular to the
-												// enemy
+			setTurnLeft(-90 - e.getBearing()); // turn perpendicular to the enemy
 			setAhead((e.getDistance() - 140) * moveDirection);// move forward
 			setFire(3);// fire
 		}
-	}
-
-	public void onHitWall(HitWallEvent e) {
-		moveDirection = -moveDirection;// reverse direction upon hitting a wall
 	}
 
 	/**
-	 * onWin: Do a victory dance
+	* Reverse the direction upon hitting a wall
+	*/
+	public void onHitWall(HitWallEvent e) {
+		moveDirection = -moveDirection;
+	}
+
+	/**
+	 * Do a victory dance
 	 */
 	public void onWin(WinEvent e) {
 		for (int i = 0; i < 50; i++) {
