@@ -2,6 +2,11 @@ package genes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
 import org.jgap.FitnessFunction;
@@ -29,8 +34,8 @@ public class Main {
 		Gene[] sampleGenes = new Gene[4];
 		sampleGenes[0] = new DoubleGene(conf, 0.0, 300.0);	// Radar distance
 		sampleGenes[1] = new DoubleGene(conf, 0.1, 1.0);	// probability change of speed
-		sampleGenes[2] = new DoubleGene(conf, 0.0, 1.0);	// Speed range
-		sampleGenes[3] = new DoubleGene(conf, 0.0, 8.0);	// Minimum speed
+		sampleGenes[2] = new DoubleGene(conf, 0.1, 1.0);	// Speed range
+		sampleGenes[3] = new DoubleGene(conf, 0.1, 8.0);	// Minimum speed
 
 		IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		conf.setSampleChromosome(sampleChromosome);
@@ -57,10 +62,19 @@ public class Main {
 		XMLManager.writeFile(xmlDoc, new File("robocodeJGAP.xml"));
 
 		IChromosome bestSolutionSoFar = population.getFittestChromosome();
-		System.out.println("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
-		System.out.println("It contained the following values: ");
+		StringBuilder sb = new StringBuilder();
+		sb.append("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
+		sb.append("\n It contained the following values: ");
 		for (int i = 0; i < 4; i++) {
-			System.out.println(bestSolutionSoFar.getGene(i).getAllele());
+			sb.append("\n" + bestSolutionSoFar.getGene(i).getAllele() + " ");
+		}
+		
+		System.out.println(sb.toString());
+		
+		try {
+		    Files.write(Paths.get("C:\\Users\\SrSut\\Desktop\\Results.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
+		}catch (IOException e) {
+		    e.printStackTrace();
 		}
 
 	}
