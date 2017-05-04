@@ -50,9 +50,13 @@ public class SuperTracker extends AdvancedRobot {
 		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the
 																// radar
 		if (numberGenerator.nextDouble() > params[1]) {
-			setMaxVelocity((params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
+	/*		setMaxVelocity((params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
 														// \\ VELOCIDAD + RANGO
 														// + MINIMA VELOCIDAD
+		*/
+			setMaxVelocity(((8 - params[3]) * params[2] * numberGenerator.nextDouble()) + params[3]);// randomly change speed
+														//  MAXVELOCIDAD = RANGO + MINIMA VELOCIDAD
+														//Rango needed from 0 to maxvelocity(=8)-minvelocidad
 		}
 		if (e.getDistance() > params[0]) {// if distance is greater than 150 \\
 									// DISTANCIA
