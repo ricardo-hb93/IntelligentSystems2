@@ -29,7 +29,7 @@ public class BattleRunner {
 		engine.runBattle(battleSpec, true);
 		engine.close();
 		result = BattleObserver.res;
-	//	System.out.println(result);
+//		System.out.println(result);
 		return result;
 	}
 
@@ -45,6 +45,6 @@ class BattleObserver extends BattleAdaptor {
 //		for(int i=0; i<e.getIndexedResults().length; i++){
 ////			System.out.println(e.getIndexedResults()[i].getScore());
 //		}
-		res = e.getSortedResults()[0].getScore() - e.getSortedResults()[1].getScore();
+		res = Math.max(e.getIndexedResults()[0].getScore() - e.getIndexedResults()[1].getScore(), 0);
 	}
 }
