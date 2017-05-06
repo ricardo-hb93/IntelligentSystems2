@@ -2,11 +2,7 @@ package test;
 
 import robocode.*;
 import java.awt.*;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Locale;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * SuperTracker - a Super Sample Robot by CrazyBassoonist based on the robot
@@ -17,7 +13,8 @@ import java.util.Scanner;
 public class SuperTracker extends AdvancedRobot {
 	int moveDirection = 1;// which way to move
 	Random numberGenerator = new Random(0);
-	private double[] params = { 101.7911592526748, 0.6323674372272312, 0.2994203426369497, 5.097183165330748 };
+	private double[] params = { 5.907976137818505, 0.9630546789065678, 0.9789899727896388, 6.8069035003427745,
+			-0.48852244735184613 };
 
 	/**
 	 * run: Tracker's main run function
@@ -25,11 +22,11 @@ public class SuperTracker extends AdvancedRobot {
 
 	public void run() {
 		setAdjustRadarForRobotTurn(true);
-		setBodyColor(new Color(128, 128, 50));
-		setGunColor(new Color(50, 50, 20));
-		setRadarColor(new Color(200, 200, 70));
-		setScanColor(Color.white);
-		setBulletColor(Color.blue);
+		if (params[4] > 0) {
+			setAllColors(Color.YELLOW);
+		} else {
+			setAllColors(Color.GREEN);
+		}
 		setAdjustGunForRobotTurn(true);
 		turnRadarRightRadians(Double.POSITIVE_INFINITY);
 	}
