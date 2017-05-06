@@ -21,21 +21,20 @@ import org.jgap.xml.XMLDocumentBuilder;
 import org.jgap.xml.XMLManager;
 import org.w3c.dom.Document;
 
-public class Main {
+public class MainTrackFire {
 	private final static int MAX_ALLOWED_EVOLUTIONS = 10;
 
 	public static void findConfigurationForRobot() throws Exception {
 		Configuration conf = new DefaultConfiguration();
 		conf.setPreservFittestIndividual(true);
-		FitnessFunction myFunc = new RobotFitnessFunction("supersample.SuperTracker*");
+		FitnessFunction myFunc = new RobotFitnessFunction("supersample.SuperTrackFire*");
 		conf.setFitnessFunction(myFunc);
 
-		Gene[] sampleGenes = new Gene[5];
-		sampleGenes[0] = new DoubleGene(conf, 0.0, 300.0);	// Radar distance
-		sampleGenes[1] = new DoubleGene(conf, 0.1, 1.0);	// probability change of speed
-		sampleGenes[2] = new DoubleGene(conf, 0.1, 1.0);	// Speed range
-		sampleGenes[3] = new DoubleGene(conf, 0.1, 8.0);	// Minimum speed
-		sampleGenes[4] = new DoubleGene(conf, -1.0, 1.0);	// Color!
+		Gene[] sampleGenes = new Gene[4];
+		sampleGenes[0] = new DoubleGene(conf, 0.0, 1);	
+		sampleGenes[1] = new DoubleGene(conf, 0.0, 4.0);
+		sampleGenes[2] = new DoubleGene(conf, 0.0, 200.0);
+		sampleGenes[3] = new DoubleGene(conf, 0.0, 1.0);
 		
 		IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		conf.setSampleChromosome(sampleChromosome);
@@ -54,10 +53,15 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		
 		for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
-			bestSolutionSoFar = population.getFittestChromosome();
-			System.out.print("Generation "+ i +":");
+			System.out.print("\nGeneration "+ i +":");
 			population.evolve();
+			bestSolutionSoFar = population.getFittestChromosome();
 			System.out.println("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
+			System.out.println("\nIt contained the following values: ");
+			for (int j = 0; j < 4; j++) {
+				System.out.println("\n" + bestSolutionSoFar.getGene(j).getAllele() + " ");
+			}
+			System.out.println("\n");
 		}
 
 		DataTreeBuilder builder = DataTreeBuilder.getInstance();
@@ -70,14 +74,14 @@ public class Main {
 		
 		sb.append("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
 		sb.append("\nIt contained the following values: ");
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			sb.append("\n" + bestSolutionSoFar.getGene(i).getAllele() + " ");
 		}
 		sb.append("\n");
 		System.out.println(sb.toString());
 		
 		try {
-		    Files.write(Paths.get("C:\\Users\\SrSut\\Desktop\\Results.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
+		    Files.write(Paths.get("C:\\Users\\SrSut\\Desktop\\ResultsTrack.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
 		}catch (IOException e) {
 		    e.printStackTrace();
 		}

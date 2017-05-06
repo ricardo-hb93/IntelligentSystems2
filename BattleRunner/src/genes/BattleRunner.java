@@ -9,7 +9,7 @@ public class BattleRunner {
 		RobocodeEngine.setLogMessagesEnabled(false);
 		RobocodeEngine engine = new RobocodeEngine(new java.io.File("C:\\Robocode"));
 		engine.addBattleListener(new BattleObserver());
-		engine.setVisible(true);
+		engine.setVisible(false);
 
 		long inactivityTime = 10000000;
 		double gunCoolingRate = 0.2;
@@ -29,7 +29,6 @@ public class BattleRunner {
 		engine.runBattle(battleSpec, true);
 		engine.close();
 		result = BattleObserver.res;
-
 		return result;
 	}
 
@@ -38,6 +37,6 @@ public class BattleRunner {
 class BattleObserver extends BattleAdaptor {
 	public static int res;
 	public void onBattleCompleted(BattleCompletedEvent e) {
-		res = Math.max(e.getIndexedResults()[1].getScore() - e.getIndexedResults()[0].getScore(), 0);
+		res = e.getIndexedResults()[1].getScore();
 	}
 }

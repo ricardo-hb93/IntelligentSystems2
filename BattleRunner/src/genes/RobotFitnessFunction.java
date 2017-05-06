@@ -29,7 +29,7 @@ public class RobotFitnessFunction extends FitnessFunction {
 	 * 
 	 * */
 	private void setValues(IChromosome chromosomes){
-		String filename = "C:\\Users\\Pepe\\workspace\\BattleRunner\\src\\a.txt";
+		String filename = "C:\\Users\\SrSut\\workspaceRobocode\\GeneticAlgorithmPractice\\src\\supersample\\tuneFire.txt";
 		try {
 			PrintWriter pw = new PrintWriter(new File(filename));
 			for (int i=0; i<chromosomes.size(); i++){
