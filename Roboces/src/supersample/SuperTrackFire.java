@@ -16,7 +16,7 @@ import java.util.Scanner;
  *Random oscillating movement with slightly random Head-On Targeting
  */
 public class SuperTrackFire extends AdvancedRobot {
-	Random numberGenerator = new Random();
+	Random numberGenerator = new Random(0);
 	private double[] params;
 	int dir=1;//Which way we want to move
 	/**
