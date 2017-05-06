@@ -24,7 +24,10 @@ import org.w3c.dom.Document;
 public class Main {
 	private final static int MAX_ALLOWED_EVOLUTIONS = 10;
 
+	@SuppressWarnings("deprecation")
 	public static void findConfigurationForRobot() throws Exception {
+		int green = 0;
+		int yellow = 0;
 		Configuration conf = new DefaultConfiguration();
 		conf.setPreservFittestIndividual(true);
 		FitnessFunction myFunc = new RobotFitnessFunction("supersample.SuperTracker*");
@@ -52,12 +55,24 @@ public class Main {
 		
 		IChromosome bestSolutionSoFar = population.getFittestChromosome();
 		StringBuilder sb = new StringBuilder();
+		IChromosome popChromosomes[];
+		boolean colorBool = true;
+		double colorDouble;
 		
 		for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
 			bestSolutionSoFar = population.getFittestChromosome();
 			System.out.print("Generation "+ i +":");
 			population.evolve();
 			System.out.println("The best solution has a fitness value of " + bestSolutionSoFar.getFitnessValue());
+			popChromosomes = population.getChromosomes();
+			for(int j = 0; j<popChromosomes.length; j++){
+				colorDouble = (double) popChromosomes[j].getGene(4).getAllele();
+				colorBool = colorDouble > 0;
+				if (colorBool)
+					green++;
+				else
+					yellow++;
+			}
 		}
 
 		DataTreeBuilder builder = DataTreeBuilder.getInstance();
@@ -73,7 +88,7 @@ public class Main {
 		for (int i = 0; i < 5; i++) {
 			sb.append("\n" + bestSolutionSoFar.getGene(i).getAllele() + " ");
 		}
-		sb.append("\n");
+		sb.append("\n Green: " + green + ", Yellow: " + yellow);
 		System.out.println(sb.toString());
 		
 		try {
